@@ -1,0 +1,25 @@
+CXX = mingw32-g++
+BM_LIB = -L"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\OBJ" -lWrapper_CAN
+
+BM_INCLUDES = -I"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\Include"
+
+CXXFLAGS = -Wall -c
+#$(BM_INCLUDE)
+
+dll = Prova_EPS.dll
+
+DBOBJFILE = "C:\ProgramData\BUSMASTER\General\DBCache\F624_gcc4.8.1.obj" "C:\ProgramData\BUSMASTER\General\DBCache\33D16_gcc4.8.1.obj" 
+
+DBINCLUDES = -include"C:\ProgramData\BUSMASTER\General\DBCache\F624.h" -include"C:\ProgramData\BUSMASTER\General\DBCache\33D16.h" 
+
+
+all: $(dll)
+
+$(dll): Prova_EPS.o
+	$(CXX) -shared -Wl,--dll  Prova_EPS.o $(DBOBJFILE) $(BM_LIB) -o $@
+
+Prova_EPS.o: D:/Documenti/CLIMER/ETCR_Romeo_Ferraris/CAN_NO~1/EPS_TEST/PROVA_~1.CPP
+	$(CXX) $(DBINCLUDES) $(CXXFLAGS) $(BM_INCLUDES) $< -o $@
+
+clean: 
+	del /f Prova_EPS.o
